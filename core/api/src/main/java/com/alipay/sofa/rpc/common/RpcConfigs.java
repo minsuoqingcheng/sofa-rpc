@@ -28,12 +28,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -46,7 +41,7 @@ public class RpcConfigs {
     /**
      * 全部配置
      */
-    private final static ConcurrentHashMap<String, Object>                  CFG          = new ConcurrentHashMap<String, Object>();
+    private final static ConcurrentHashMap<String, Object> CFG = new ConcurrentHashMap<String, Object>();
     /**
      * 配置变化监听器
      */
@@ -83,7 +78,7 @@ public class RpcConfigs {
     private static void loadCustom(String fileName) throws IOException {
         ClassLoader classLoader = ClassLoaderUtils.getClassLoader(RpcConfigs.class);
         Enumeration<URL> urls = classLoader != null ? classLoader.getResources(fileName)
-            : ClassLoader.getSystemResources(fileName);
+                : ClassLoader.getSystemResources(fileName);
         if (urls != null) { // 可能存在多个文件
             List<CfgFile> allFile = new ArrayList<CfgFile>();
             while (urls.hasMoreElements()) {
@@ -326,8 +321,8 @@ public class RpcConfigs {
      */
     protected static boolean changed(Object oldObj, Object newObj) {
         return oldObj == null ?
-            newObj != null :
-            !oldObj.equals(newObj);
+                newObj != null :
+                !oldObj.equals(newObj);
     }
 
     /**
