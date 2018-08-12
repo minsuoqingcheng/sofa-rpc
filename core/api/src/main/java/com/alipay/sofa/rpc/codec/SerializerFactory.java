@@ -48,8 +48,7 @@ public final class SerializerFactory {
     private final static ExtensionLoader<Serializer>         EXTENSION_LOADER    = buildLoader();
 
     private static ExtensionLoader<Serializer> buildLoader() {
-        return ExtensionLoaderFactory.getExtensionLoader(Serializer.class,
-            new ExtensionLoaderListener<Serializer>() {
+        return ExtensionLoaderFactory.getExtensionLoader(Serializer.class, new ExtensionLoaderListener<Serializer>() {
                 @Override
                 public void onLoad(ExtensionClass<Serializer> extensionClass) {
                     // 除了保留 tag：Serializer外， 需要保留 code：Serializer
