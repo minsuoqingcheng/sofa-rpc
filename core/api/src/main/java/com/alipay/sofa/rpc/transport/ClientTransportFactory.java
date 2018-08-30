@@ -35,8 +35,7 @@ public class ClientTransportFactory {
     /**
      * slf4j Logger for this class
      */
-    private final static Logger                LOGGER                  = LoggerFactory
-                                                                           .getLogger(ClientTransportFactory.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(ClientTransportFactory.class);
 
     /**
      * 不可复用长连接管理器
@@ -146,8 +145,11 @@ public class ClientTransportFactory {
                 transport = REVERSE_CLIENT_TRANSPORT_MAP.get(key);
                 if (transport == null) {
                     ClientTransportConfig config = new ClientTransportConfig()
-                        .setProviderInfo(new ProviderInfo().setHost(channel.remoteAddress().getHostName())
-                            .setPort(channel.remoteAddress().getPort()))
+                        .setProviderInfo(
+                                new ProviderInfo()
+                                        .setHost(channel.remoteAddress().getHostName())
+                                        .setPort(channel.remoteAddress().getPort())
+                        )
                         .setContainer(container);
                     transport = ExtensionLoaderFactory.getExtensionLoader(ClientTransport.class)
                         .getExtension(config.getContainer(),

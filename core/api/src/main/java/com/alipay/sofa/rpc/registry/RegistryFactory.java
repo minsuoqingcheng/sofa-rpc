@@ -44,8 +44,7 @@ public class RegistryFactory {
     /**
      * slf4j Logger for this class
      */
-    private final static Logger                                      LOGGER         = LoggerFactory
-                                                                                        .getLogger(RegistryFactory.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(RegistryFactory.class);
 
     /**
      * 得到注册中心对象

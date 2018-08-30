@@ -55,8 +55,7 @@ public class ProtocolFactory {
             @Override
             public void onLoad(ExtensionClass<Protocol> extensionClass) {
                 // 除了保留 alias：Protocol外， 需要保留 code：Protocol
-                Protocol protocol = extensionClass
-                    .getExtInstance();
+                Protocol protocol = extensionClass.getExtInstance();
                 TYPE_PROTOCOL_MAP.put(extensionClass.getCode(), protocol);
                 TYPE_CODE_MAP.put(extensionClass.getAlias(), extensionClass.getCode());
                 if (RpcConfigs.getBooleanValue(RpcOptions.TRANSPORT_SERVER_PROTOCOL_ADAPTIVE)) {

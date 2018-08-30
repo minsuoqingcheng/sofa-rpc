@@ -52,8 +52,7 @@ public class FilterChain implements Invoker {
     /**
      * 日志
      */
-    private static final Logger                                            LOGGER                = LoggerFactory
-                                                                                                     .getLogger(FilterChain.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FilterChain.class);
 
     /**
      * 服务端自动激活的 {"alias":ExtensionClass}
@@ -68,7 +67,7 @@ public class FilterChain implements Invoker {
     /**
      * 扩展加载器
      */
-    private final static ExtensionLoader<Filter>                           EXTENSION_LOADER      = buildLoader();
+    private final static ExtensionLoader<Filter> EXTENSION_LOADER = buildLoader();
 
     private static ExtensionLoader<Filter> buildLoader() {
         return ExtensionLoaderFactory.getExtensionLoader(Filter.class, new ExtensionLoaderListener<Filter>() {
@@ -86,7 +85,7 @@ public class FilterChain implements Invoker {
                     }
                     if (LOGGER.isDebugEnabled()) {
                         LOGGER.debug("Extension of interface " + Filter.class
-                            + ", " + implClass + "(" + alias + ") will auto active");
+                                + ", " + implClass + "(" + alias + ") will auto active");
                     }
                 }
             }
@@ -101,7 +100,7 @@ public class FilterChain implements Invoker {
     /**
      * 过滤器列表，从底至上排序
      */
-    private List<Filter>  loadedFilters;
+    private List<Filter> loadedFilters;
 
     /**
      * 构造执行链
@@ -152,7 +151,7 @@ public class FilterChain implements Invoker {
          */
         // 用户通过自己new实例的方式注入的filter，优先级高
         List<Filter> customFilters = providerConfig.getFilterRef() == null ?
-            new ArrayList<Filter>() : new CopyOnWriteArrayList<Filter>(providerConfig.getFilterRef());
+                new ArrayList<Filter>() : new CopyOnWriteArrayList<Filter>(providerConfig.getFilterRef());
         // 先解析是否有特殊处理
         HashSet<String> excludes = parseExcludeFilter(customFilters);
 
@@ -203,18 +202,18 @@ public class FilterChain implements Invoker {
     public static FilterChain buildConsumerChain(ConsumerConfig<?> consumerConfig, FilterInvoker lastFilter) {
 
         /*
-        * 例如自动装载扩展 A(a),B(b),C(c)  filter=[-a,d]  filterRef=[new E, new Exclude(b)]
-        * 逻辑如下：
-        * 1.解析config.getFilterRef()，记录E和-b
-        * 2.解析config.getFilter()字符串，记录 d 和 -a,-b
-        * 3.再解析自动装载扩展，a,b被排除了，所以拿到c,d
-        * 4.对c d进行排序
-        * 5.拿到C、D实现类
-        * 6.加上自定义，返回C、D、E
-        */
+         * 例如自动装载扩展 A(a),B(b),C(c)  filter=[-a,d]  filterRef=[new E, new Exclude(b)]
+         * 逻辑如下：
+         * 1.解析config.getFilterRef()，记录E和-b
+         * 2.解析config.getFilter()字符串，记录 d 和 -a,-b
+         * 3.再解析自动装载扩展，a,b被排除了，所以拿到c,d
+         * 4.对c d进行排序
+         * 5.拿到C、D实现类
+         * 6.加上自定义，返回C、D、E
+         */
         // 用户通过自己new实例的方式注入的filter，优先级高
         List<Filter> customFilters = consumerConfig.getFilterRef() == null ?
-            new ArrayList<Filter>() : new CopyOnWriteArrayList<Filter>(consumerConfig.getFilterRef());
+                new ArrayList<Filter>() : new CopyOnWriteArrayList<Filter>(consumerConfig.getFilterRef());
         // 先解析是否有特殊处理
         HashSet<String> excludes = parseExcludeFilter(customFilters);
 
@@ -271,8 +270,8 @@ public class FilterChain implements Invoker {
                     String excludeName = excludeFilter.getExcludeName();
                     if (StringUtils.isNotEmpty(excludeName)) {
                         String excludeFilterName = startsWithExcludePrefix(excludeName) ?
-                            excludeName.substring(1)
-                            : excludeName;
+                                excludeName.substring(1)
+                                : excludeName;
                         if (StringUtils.isNotEmpty(excludeFilterName)) {
                             excludeKeys.add(excludeFilterName);
                         }
@@ -302,7 +301,6 @@ public class FilterChain implements Invoker {
     /**
      * Do filtering when async respond from server
      *
-     *
      * @param config    Consumer config
      * @param request   SofaRequest
      * @param response  SofaResponse
@@ -310,14 +308,13 @@ public class FilterChain implements Invoker {
      * @throws SofaRpcException occur error
      */
     public void onAsyncResponse(ConsumerConfig config, SofaRequest request, SofaResponse response, Throwable throwable)
-        throws SofaRpcException {
+            throws SofaRpcException {
         try {
             for (Filter loadedFilter : loadedFilters) {
                 loadedFilter.onAsyncResponse(config, request, response, throwable);
             }
         } catch (SofaRpcException e) {
-            LOGGER
-                .errorWithApp(config.getAppName(), "Catch exception when do filtering after asynchronous respond.", e);
+            LOGGER.errorWithApp(config.getAppName(), "Catch exception when do filtering after asynchronous respond.", e);
         }
     }
 
